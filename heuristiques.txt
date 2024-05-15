@@ -1,0 +1,18 @@
+Les Heuristiques que j'ai utilisé dans mon programme :
+
+La stratégie consiste à analyser tous les déplacements possibles, de pondérer chacun d'entre eux et de sélectionner le déplacement rapportant le plus de points ou présentant le moins de risque.
+
+Le classement des types de déplacements est :  
+1 - Déplacement avec prise par retournement. (Car il permet de gagner plus de points)
+2 - Déplacement avec élimination en minimisant les risques. (S'il n'y a pas possibilité d'effectuer un déplacement par retournement)
+3 - Déplacement Simple en minimisant les risques.
+
+
+Tout d'abord, le programme détermine l'enchainement le plus long possible permettant donc de gagner un maximum de points.
+Ensuite, si on ne peut effectuer un déplacement avec prise par retournement, le programme calcule le déplacement par élimination qui présente un minimum de risque, c'est à dire éliminer un pion adverse sans s'exposer pour ne pas se faire capturer.
+Enfin, s'il est impossible de réaliser les deux déplacements précédents, le programme choisit le déplacement simple qui présente un minimum de risques.
+
+
+Pour le déplacement avec prise par retournement : j'utilise une matrice comme structure de données pour stocker tous les enchainements possibles et renvoyer la chaine la plus longue.
+Pour le déplacement avec prise par élimination : je détermine la liste de tous les déplacements par élimination possibles, je pondère ces déplacements avec le nombre de pions adverses capables de me capturer une fois le déplacement effectué, ensuite je renvoie les coordonnées qui contiennent le minimum de risques.
+Pour le déplacement simple : je détermine aussi la liste de tous les déplacements simples possibles, et je choisis les coordonnées qui ont le minimum de risques, comme précédemment, de se faire capturer.

@@ -1,0 +1,76 @@
+Description de mon programme BALEARES:
+
+Mon programme est décomposé en plusieurs parties : 
+- Un ensemble de fonctions dédiées à la grille de jeu pour la créer, l'afficher et la mettre à jour.
+- Un ensemble de fonctions dédiées à la saisie du type de la partie de jeu et du joueur et des coordonnées de grilles.
+- Un ensemble de fonctions de vérification de la validité des coordonnées, des déplacements simples et de capture. 
+- Un ensemble de fonctions utilitaires dédiées à l’alimentation de la partie IA naïve et de la partie IA avancée.
+- Un ensemble de fonctions dédiées aux lancements de la partie du jeu.
+
+
+°Pour les fonctions qui concernent la grille : 
+- Il y a la fonction 'creer_grille(nb)' qui permet de créer une grille à partir de n'importe quelle taille de grille.
+- Les fonctions de création des grilles dans différentes configurations (elles sont utilisées aussi dans les fonctions de tests).
+- Les fonctions d'affichage qui permettent d'afficher le nombre de pions ainsi que la grille de jeu.
+- Les fonctions de mise-à-jour de grille qui permettent de mettre à jour la grille après avoir effectué un déplacement.
+
+
+°Pour les fonctions de saisie :
+- La fonction 'choix_jeu()' permet de choisir à l'utilisateur de choisir le type de jeu.
+- La fonction 'choisir_grille()' permet de choisir la configuration de grille ( début/milieu/fin).
+- La fonction 'type_joueur()' permet de choisir son propre joueur ( 'x' / 'o' ).
+- La fonction 'abandon()' est utilisée pour demander à l'utilisateur de choisir la continuation ou l'annulation de la partie.
+- La fonction 'saisir_coordonnees()' permet à l'utilisateur de saisir les coordonnées de départ et d'arrivée en faisant appel aux fonctions de vérifications et détermine automatiquement le type de déplacement ( simple, saut ou retournement ).
+- La fonction 'enchainement()' qui donne à l'utilisateur le choix d'effectuer des enchainements de retournements si possible.
+- La fonction 'menu()' fait appel à la fonction 'choix_jeu()' afin de déterminer le type de jeu et lance la partie.
+- La fonction 'jeu()' propose au correcteur de lancer la fonction générale de test ou de lancer la partie en faisant directement l'appel à la fonction 'menu()'.
+
+
+°Pour les fonctions de Verifications :
+- Les fonction 'est_au_bon_format()' et 'est_dans_grille()' vérifient les coordonnées en utilisant le code ASCII.
+- La fonction 'est_fin_de_partie()' parcourt toute la grille et calcule le nombre de pions restants et renvoie un booléen si la partie est finie.
+- La fonction 'arrivee_adjacente()' vérifie si deux cases reçues en paramètres sont adjacentes ou pas, elle est utilisée surtout la vérification d'un déplacement par saut.
+- La fonction 'direction()' vérifie si deux cases reçues en paramètres sont dans la même direction ( vertical, horizontal ou diagonal).
+- La fonction 'vide_entre_case()' vérifie si tout le chemin entre deux cases est vide, c'est à dire toutes les cases entre le départ et l'arrivée sont vides, elle est aussi utilisée pour la vérification d'un déplacement simple.
+- La fonction 'deplacement_simple()' vérifie la possibilité d'effectuer un déplacement simple en vérifiant si la case de départ et d'arrivée sont dans la même direction et sont soit adjacentes ou toutes les cases du milieu sont vides.
+- La fonction 'deplacement_saut()' vérifie la possibilité d'effectuer un déplacement par saut en vérifiant qu'il y a au moins une case vide entre l'arrivée et le départ et que la case d'arrivée est une case du pion adversaire.
+- La fonction 'deplacement_retournement()' vérifie la possibilité d'effectuer un déplacement par retournement : soit un déplacement sans espace c'est-à-dire les cases des deux adversaires sont adjacentes, soit un déplacement avec espace c'est-à-dire il y a au moins une case vide entre les deux pions adversaires.
+ 	### Remarque : Les fonctions 'vide_entre_case()' et 'deplacement_retournement()'dépasse les 15 lignes car j'ai décomposé en 8 parties, chaque partie pour une direction.
+
+
+°Pour les fonctions de conversions :
+- La fonction 'conversion_ligne()' permet de convertir une ligne de grille en nombre.
+- La fonction 'conversion_chr()' permet de convertir des chiffres en coordonnées.
+	### Remarque : elles sont utilisées pour déchiffrer les coordonnées de départ ou d'arrivée.
+- La fonction 'inverser_joueur()' permet d'inverser le joueur courant.
+
+
+°Pour les fonctions de vérification IA Naïve :
+- La fonction 'case_depart_ordi()' parcourt la grille et renvoie la liste de toutes les cases de départ possibles de l'ordinateur.
+- La fonction 'liste_arrivee_simple()' parcourt la grille et renvoie la liste de toutes les arrivées possibles de déplacement simple.
+- La fonction 'liste_arrivee_saut()' parcourt la grille et renvoie la liste de toutes les cases possibles à éliminer à partir d'une case de départ.
+- La fonction 'liste_arrivee_retournement()' parcourt la grille et renvoie la liste de tous les déplacements par retournements possibles à partir d'une case de départ.
+
+
+°Pour les fonctions de vérification IA Avancée :
+- La fonction "compteur_risque()" calcule le nombre de risque de se faire éliminer.
+- La fonction 'liste_enchainement()' renvoie la chaine d'enchainement possible à partir d'une case de départ.
+- La fonction 'matrice_enchainement()' utilise comme structure de données une matrice où elle stocke tous les enchainements possibles à partir d'une case de départ.
+- La fonction 'long_chemin()' appelle la fonction 'matrice_enchainement()' et parcourt toute cette matrice et renvoie la liste d'enchainement la plus longue.
+- La fonction 'retournement_ia_avancee()' récupère la liste de tous les départs possibles puis fait appel à la fonction 'long_chemin()' pour renvoyer la chaine d'enchainement la plus longue afin de capturer le maximum de pion possible.
+- La fonction 'dep_saut_avancee()' renvoie les coordonnées de déplacement par saut en minimisant les risques de se faire capturer : en prenant en compte le minimum de risques. C'est-à-dire : renvoyer les coordonnées qui ont le minimum de risques.
+- La fonction 'dep_simple_avancee()' renvoie les coordonnées de déplacement simple en minimisant les risques de se faire capturer.
+- La fonction 'choix_deplacement_ordi()' classe les déplacements selon leur priorité et renvoie le meilleur déplacement possible.
+
+
+°Pour les fonctions de jeu :
+- La fonction 'jeu_joueur()' lance la partie joueur vs joueur.
+- La fonction 'ia_naive()' lance la partie joueur vs IA Naïve.
+- La fonction 'ia_avancee()' lance la partie joueur vs Ia Avancée.
+	### Remarque : ces fonctions dépassent les 15 lignes, elles bouclent tant que la partie n'est pas finie et n'est pas abandonnée.
+
+
+°Pour la fonction générale de test : elle fait appel à toutes les fonctions du programme sauf les fonctions d'affichage, de saisie et de mise à jour de grille.
+
+
+Le programme principal appelle juste la fonction 'jeu()'.
